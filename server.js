@@ -1,23 +1,37 @@
 var http = require('http')
 var fs = require('fs')
 
-http.createServer(function(request,respose){
+http.createServer(function(request,response){
     console.log('request come', request.url)
 
     if(request.url === '/') {
         const html = fs.readFileSync('test.html', 'utf8')
-        respose.writeHead(200, {
+        response.writeHead(200, {
             'Content-Type': 'text/html'
         })
-        respose.end(html)
+        response.end(html)
     }
 
     if(request.url === '/script.js') {
-        respose.writeHead(200, {
-            'Content-Type': 'text/javascript',
-            'Cache-Control': 'max-age=200'
-        })
-        respose.end('console.log("script loaded twice")')
+        const etag = request.headers['if-none-match']
+        console.log(etag)
+        if(etag === '777'){
+            response.writeHead(304, {
+                'Content-Type': 'text/javascript',
+                'Cache-Control': 'max-age=200000000, no-store',
+                'Last-Modified': '123',
+                'Etag': '777'
+            })
+            response.end('')
+        } else {
+            response.writeHead(200, {
+                'Content-Type': 'text/javascript',
+                'Cache-Control': 'max-age=200000000, no-store',
+                'Last-Modified': '123',
+                'Etag': '777'
+            })
+            response.end('console.log("script loaded twice")')
+        }
     }
 
 }).listen(8888)

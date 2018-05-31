@@ -7,31 +7,10 @@ http.createServer(function(request,response){
     if(request.url === '/') {
         const html = fs.readFileSync('test.html', 'utf8')
         response.writeHead(200, {
-            'Content-Type': 'text/html'
+            'Content-Type': 'text/html',
+            'Set-Cookie': ['id=123; max-age=2', 'abc=456']
         })
         response.end(html)
-    }
-
-    if(request.url === '/script.js') {
-        const etag = request.headers['if-none-match']
-        console.log(etag)
-        if(etag === '777'){
-            response.writeHead(304, {
-                'Content-Type': 'text/javascript',
-                'Cache-Control': 'max-age=200000000',
-                'Last-Modified': '123',
-                'Etag': '777'
-            })
-            response.end('')
-        } else {
-            response.writeHead(200, {
-                'Content-Type': 'text/javascript',
-                'Cache-Control': 'max-age=200000000, no-cache',
-                'Last-Modified': '123',
-                'Etag': '777'
-            })
-            response.end('console.log("script loaded twice")')
-        }
     }
 
 }).listen(8888)

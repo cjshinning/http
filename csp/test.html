@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Security-policy" content="connect-src 'self'; form-action 'self'; report-uri /report">
+    <title>Document</title>
+</head>
+<body>
+    <div>This is content</div>
+    <form action="https://baidu.com">
+        <button type="submit">click me</button>
+    </form>
+    <img src="//cdn2.jianshu.io/assets/web/web-note-ad-1-c2e1746859dbf03abe49248893c9bea4.png" alt="">
+    <script>
+        console.log('inline js')
+        fetch('https://baidu.com')
+    </script>
+    <script src="/test.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/core.js"></script>
+</body>
+</html>

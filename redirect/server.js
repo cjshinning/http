@@ -5,15 +5,18 @@ var zlib = require('zlib')
 http.createServer(function(request,response){
     console.log('request come', request.url)
 
-    const html = fs.readFileSync('test.html', 'utf8')
-    
-
     if(request.url === '/'){
-        response.writeHead(200, {
-            'Content-Type': 'text/html',
-            'Content-Encoding': 'gzip'
+        response.writeHead(302, {
+            'Location': '/new'
         })
-        response.end(zlib.gzipSync(html))
+        response.end('')
+    }
+
+    if(request.url === '/new'){
+        response.writeHead(200, {
+            'Content-Type': 'text/html'
+        })
+        response.end('<div>This is content</div>')
     }
     
 }).listen(8888)
